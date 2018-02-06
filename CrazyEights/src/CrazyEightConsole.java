@@ -1,16 +1,26 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Collections;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.JFrame;
 
 public class CrazyEightConsole
 	{
 		static ArrayList<Card> deck = new ArrayList<Card>();
-		
+		static ArrayList<Card> playerHand = new ArrayList<Card>();
+		static ArrayList<Card> dealerHand = new ArrayList<Card>();
+		static int numberOfPlayers;
+		private static final long serialVersionUID = 1L;
+		static JFrame frame = new JFrame();
+		static Scanner userInput = new Scanner(System.in);
 		
 		public static void main(String[] args)
 			{
 				fillDeck();
 				shuffle();
-				
+				gameStart();
 			}
 
 		public static void fillDeck()
@@ -73,4 +83,25 @@ public class CrazyEightConsole
 			{
 			Collections.shuffle(deck);
 			}
+
+		public static void gameStart()
+			{
+				System.out.println("Welcome to Crazy Eights");
+				System.out.println("Would you like to check the deck?");
+				String answer1 = userInput.nextLine();
+				
+				if(answer1.equals("yes") || answer1.equals("Yes"))
+					{
+						for(int i = 0; i < deck.size();i++)
+							{
+								System.out.println(deck.get(i).getRank() + " of " + deck.get(i).getSuit());
+							}
+					}
+				else if(answer1.equals("no") || answer1.equals("No"))
+					{
+						System.out.println("ok");
+					}
+				
+			}
+
 	}

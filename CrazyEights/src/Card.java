@@ -1,25 +1,25 @@
 
 public class Card
 	{
-		public String number;
-		public String suit;
-		public int value;
+		String rank;
+		String suit;
+		int value;
 		
 		public Card(String n, String s, int v)
 		{
-			number = n;
+			rank = n;
 			suit = s;
 			value = v;
 		}
 
-		public String getNumber()
+		public String getRank()
 			{
-				return number;
+				return rank;
 			}
 
-		public void setNumber(String number)
+		public void setRank(String rank)
 			{
-				this.number = number;
+				this.rank = rank;
 			}
 
 		public String getSuit()
