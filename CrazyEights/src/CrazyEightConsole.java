@@ -4,14 +4,17 @@ import java.util.Collections;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.JFrame;
 
 public class CrazyEightConsole
 	{
 		static ArrayList<Card> deck = new ArrayList<Card>();
 		static ArrayList<Card> playerHand = new ArrayList<Card>();
-		static ArrayList<Card> dealerHand = new ArrayList<Card>();
+		static ArrayList<Card> consoleHand = new ArrayList<Card>();
+		static Card pile;
 		static int numberOfPlayers;
+		static boolean playing = true;
+		static int randomNum;
+		static int randomNum2;
 		private static final long serialVersionUID = 1L;
 		static JFrame frame = new JFrame();
 		static Scanner userInput = new Scanner(System.in);
@@ -20,7 +23,11 @@ public class CrazyEightConsole
 			{
 				fillDeck();
 				shuffle();
+				dealCardPlayer();
+				dealCardConsole();
+				initialDeal();
 				gameStart();
+				gamePlay();
 			}
 
 		public static void fillDeck()
@@ -83,6 +90,29 @@ public class CrazyEightConsole
 			{
 			Collections.shuffle(deck);
 			}
+		
+		private static void dealCardPlayer()
+			{
+				playerHand.add(deck.get(0));
+				deck.remove(0);
+			}
+		
+		private static void dealCardConsole()
+			{
+				consoleHand.add(deck.get(0));
+				deck.remove(0);
+				
+			}
+		
+		private static void initialDeal()
+			{
+				for(int i = 0; i < 5; i++)
+					{
+						dealCardPlayer();
+						dealCardConsole();
+					}
+				
+			}
 
 		public static void gameStart()
 			{
@@ -102,6 +132,22 @@ public class CrazyEightConsole
 						System.out.println("ok");
 					}
 				
+				System.out.println("You and the dealer have both been dealt 5 cards.");
+				
+			}
+		
+		private static void gamePlay()
+			{
+				playing = true;
+				
+				while(playing)
+					{
+				pile = JOptionPane.showOptionDialog(frame, "What would you like to do?",
+						"Your turn",
+						JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.QUESTION_MESSAGE,
+						null, playerHand, null);
+					}
 			}
 
 	}
