@@ -13,7 +13,7 @@ public class CrazyEightConsole
 			{ "Play", "Draw" };
 		static int choice;
 		static Card pile;
-		static String cardPlayed;
+		static int cardPlayed;
 		static int numberOfPlayers;
 		static boolean playing = true;
 		static int randomNum;
@@ -95,7 +95,7 @@ public class CrazyEightConsole
 						System.out.println("These are your cards:");
 						for (int i = 0; i < playerHand.size(); i++)
 							{
-								System.out.println(playerHand.get(i).getRank() + " of " + playerHand.get(i).getSuit());
+								System.out.println(i+1 + ". " + playerHand.get(i).getRank() + " of " + playerHand.get(i).getSuit());
 							}
 
 						choice = JOptionPane.showOptionDialog(frame, "What would you like to do?", "Your turn",
@@ -105,24 +105,18 @@ public class CrazyEightConsole
 							{
 							case 0:
 								{
-									JOptionPane.showMessageDialog(frame, " Please choose a card and type it in on the console.");
-									cardPlayed = userInput.nextLine();
+									JOptionPane.showMessageDialog(frame, " Please choose a card and type the number that it in coresponds on the console.");
+									cardPlayed = userInput.nextInt();
 									
-									for(int s = 0; s < playerHand.size(); s++)
-										{
-											//System.out.println(s);
-											//System.out.println(cardPlayed);
-											//System.out.println(playerHand.get(s).getRank() + " of " + playerHand.get(s).getSuit());
-											if(cardPlayed.equals(playerHand.get(s).getRank() + " of " + playerHand.get(s).getSuit()));
-												{
-													pile = playerHand.get(s);
-													playerHand.remove(s);
-													System.out.println("x");
-												}
-										}
+								
+													pile = playerHand.get(cardPlayed - 1);
+													playerHand.remove(cardPlayed - 1);
+													System.out.println(pile.getRank());
+												
+								}
 									
 									break;
-								}
+								
 							case 1:
 								{
 									dealCardPlayer();
