@@ -8,8 +8,7 @@ public class Deck
 		
 		public static void main(String[] args)
 		{
-			fillDeck();
-			shuffle();
+		
 		}
 		
 		public static void fillDeck()
