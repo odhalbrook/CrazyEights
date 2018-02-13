@@ -8,12 +8,16 @@ import javax.swing.*;
 public class CrazyEightConsole
 	{
 		static ArrayList<Card> playerHand = new ArrayList<Card>();
-		static ArrayList<Card> consoleHand = new ArrayList<Card>();
+		static ArrayList<Card> player2Hand = new ArrayList<Card>();
 		static Object[] option =
 			{ "Play", "Draw" };
-		static int choice;
+		static int choice1;
+		static int choice2;
+		static boolean settingCard1;
+		static boolean settingCard2;
 		static Card pile;
-		static int cardPlayed;
+		static int cardPlayed1;
+		static int cardPlayed2;
 		static int numberOfPlayers;
 		static boolean player1Playing = true;
 		static boolean player2Playing = false;
@@ -28,8 +32,6 @@ public class CrazyEightConsole
 			{
 				Deck.fillDeck();
 				Deck.shuffle();
-				dealCardPlayer();
-				dealCardConsole();
 				initialDeal();
 				gameStart();
 				gamePlay();
@@ -46,9 +48,9 @@ public class CrazyEightConsole
 					}
 			}
 
-		private static void dealCardConsole()
+		private static void dealCardPlayer2()
 			{
-				consoleHand.add(Deck.deck.get(0));
+				player2Hand.add(Deck.deck.get(0));
 				Deck.deck.remove(0);
 
 				if (Deck.deck.size() == 0)
@@ -62,7 +64,9 @@ public class CrazyEightConsole
 				for (int i = 0; i < 5; i++)
 					{
 						dealCardPlayer();
-						dealCardConsole();
+						dealCardPlayer2();
+
+						System.out.println(Deck.deck.size());
 					}
 
 			}
@@ -72,6 +76,7 @@ public class CrazyEightConsole
 				System.out.println("Welcome to Crazy Eights");
 				System.out.println("Would you like to check the deck?");
 				String answer1 = userInput.nextLine();
+				System.out.println();
 
 				if (answer1.equals("yes") || answer1.equals("Yes"))
 					{
@@ -83,37 +88,53 @@ public class CrazyEightConsole
 					{
 						System.out.println("ok");
 					}
-
+				System.out.println();
 				System.out.println("You and player 2 have both been dealt 5 cards.");
 
 			}
 
 		private static void gamePlay()
 			{
-				
+
 				while (playing)
 					{
-						System.out.println("Player1, these are your cards:");
+						System.out.println("Player 1, these are your cards:");
 						for (int i = 0; i < playerHand.size(); i++)
 							{
 								System.out.println(i + 1 + ". " + playerHand.get(i).getRank() + " of "
 										+ playerHand.get(i).getSuit());
 							}
 
-						choice = JOptionPane.showOptionDialog(frame, "What would you like to do?", "Your turn",
+						choice1 = JOptionPane.showOptionDialog(frame, "What would you like to do?", "Your turn",
 								JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, option, null);
 
-						switch (choice)
+						switch (choice1)
 							{
 							case 0:
 								{
-									JOptionPane.showMessageDialog(frame,
-											" Please choose a card and type the number that it in coresponds on the console.");
-									cardPlayed = userInput.nextInt();
+									while (settingCard1)
+										{
+											if (playerHand.get(cardPlayed2 - 1).getValue() == pile.getValue()
+													|| playerHand.get(cardPlayed2 - 1).getSuit() == pile.getSuit())
+												{
+													JOptionPane.showMessageDialog(frame,
+															" Please choose a card and type the number that it in coresponds on the console.");
+													cardPlayed1 = userInput.nextInt();
 
-									pile = playerHand.get(cardPlayed - 1);
-									playerHand.remove(cardPlayed - 1);
+													pile = playerHand.get(cardPlayed1 - 1);
+													playerHand.remove(cardPlayed1 - 1);
 
+													System.out.println();
+													System.out.println("You played the " + pile.getRank() + " of " + pile.getSuit());
+													System.out.println();
+
+												} 
+											else
+												{
+													System.out.println(
+															"Please choose a number that corresponds to the card you want to play.");
+												}
+										}
 								}
 								break;
 
@@ -124,47 +145,56 @@ public class CrazyEightConsole
 								}
 
 							}
-						System.out.println();
-						System.out.println("You played the " + pile.getRank() + " of " + pile.getSuit());
-						System.out.println();
-						
 						///
-						
+
 						System.out.println("Player 2, these are your cards:");
-						for (int i = 0; i < playerHand.size(); i++)
+						for (int i = 0; i < player2Hand.size(); i++)
 							{
-								System.out.println(i + 1 + ". " + playerHand.get(i).getRank() + " of "
-										+ playerHand.get(i).getSuit());
+								System.out.println(i + 1 + ". " + player2Hand.get(i).getRank() + " of "
+										+ player2Hand.get(i).getSuit());
 							}
 
-						choice = JOptionPane.showOptionDialog(frame, "What would you like to do?", "Your turn",
+						choice2 = JOptionPane.showOptionDialog(frame, "What would you like to do?", "Your turn",
 								JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, option, null);
 
-						switch (choice)
+						switch (choice2)
 							{
 							case 0:
 								{
-									JOptionPane.showMessageDialog(frame,
-											" Please choose a card and type the number that it in coresponds on the console.");
-									cardPlayed = userInput.nextInt();
+									while (settingCard2)
+										{
+											JOptionPane.showMessageDialog(frame,
+													" Please choose a card and type the number that it in coresponds on the console.");
+											cardPlayed2 = userInput.nextInt();
 
-									pile = playerHand.get(cardPlayed - 1);
-									playerHand.remove(cardPlayed - 1);
+											if (playerHand.get(cardPlayed2 - 1).getValue() == pile.getValue()
+													|| playerHand.get(cardPlayed2 - 1).getSuit() == pile.getSuit())
+												{
+													pile = playerHand.get(cardPlayed2 - 1);
+													playerHand.remove(cardPlayed2 - 1);
+													settingCard2 = false;
+													System.out.println();
+													System.out.println("You played the " + pile.getRank() + " of " + pile.getSuit());
+													System.out.println();
+													
+												} 
+											else
+												{
+													System.out.println("Please choose a number that corresponds to the card you want to play.");
 
+												}
+										}
 								}
 								break;
 
 							case 1:
 								{
-									dealCardPlayer();
+									dealCardPlayer2();
 									break;
 								}
 
 							}
-						System.out.println();
-						System.out.println("You played the " + pile.getRank() + " of " + pile.getSuit());
-						System.out.println();
-
+					
 					}
 			}
 
