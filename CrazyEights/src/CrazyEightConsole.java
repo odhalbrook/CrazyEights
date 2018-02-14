@@ -13,8 +13,8 @@ public class CrazyEightConsole
 			{ "Play", "Draw" };
 		static int choice1;
 		static int choice2;
-		static boolean settingCard1;
-		static boolean settingCard2;
+		static boolean settingCard1 = true;
+		static boolean settingCard2 = true;
 		static Card pile;
 		static int cardPlayed1;
 		static int cardPlayed2;
@@ -69,6 +69,9 @@ public class CrazyEightConsole
 						System.out.println(Deck.deck.size());
 					}
 
+				pile = Deck.deck.get(0);
+				Deck.deck.remove(0);
+
 			}
 
 		public static void gameStart()
@@ -98,6 +101,7 @@ public class CrazyEightConsole
 
 				while (playing)
 					{
+
 						System.out.println("Player 1, these are your cards:");
 						for (int i = 0; i < playerHand.size(); i++)
 							{
@@ -105,31 +109,40 @@ public class CrazyEightConsole
 										+ playerHand.get(i).getSuit());
 							}
 
-						choice1 = JOptionPane.showOptionDialog(frame, "What would you like to do?", "Your turn",
-								JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, option, null);
+						System.out.println();
+						System.out.println("The pile has a " + pile.getRank() + " of " + pile.getSuit());
+						System.out.println();
+
+						choice1 = JOptionPane.showOptionDialog(frame,
+								"Player 1, what would you like to do? The pile has a " + pile.getRank() + " of " + pile.getSuit(),
+								"Your turn", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+								option, null);
 
 						switch (choice1)
 							{
 							case 0:
 								{
+									settingCard2 = true;
 									while (settingCard1)
 										{
-											if (playerHand.get(cardPlayed2 - 1).getValue() == pile.getValue()
-													|| playerHand.get(cardPlayed2 - 1).getSuit() == pile.getSuit())
-												{
-													JOptionPane.showMessageDialog(frame,
-															" Please choose a card and type the number that it in coresponds on the console.");
-													cardPlayed1 = userInput.nextInt();
+											JOptionPane.showMessageDialog(frame,
+													" Please choose a card and type the number that it in coresponds on the console.");
+											cardPlayed1 = userInput.nextInt();
 
+											if (playerHand.get(cardPlayed1 - 1).getValue() == pile.getValue()
+													|| playerHand.get(cardPlayed1 - 1).getSuit() == pile.getSuit())
+												{
 													pile = playerHand.get(cardPlayed1 - 1);
 													playerHand.remove(cardPlayed1 - 1);
 
 													System.out.println();
-													System.out.println("You played the " + pile.getRank() + " of " + pile.getSuit());
+													System.out.println("You played the " + pile.getRank() + " of "
+															+ pile.getSuit());
 													System.out.println();
 
-												} 
-											else
+													settingCard1 = false;
+
+												} else
 												{
 													System.out.println(
 															"Please choose a number that corresponds to the card you want to play.");
@@ -145,6 +158,13 @@ public class CrazyEightConsole
 								}
 
 							}
+
+						if (playerHand.size() == 0)
+							{
+								System.out.println("Player One, you WIN!!!");
+								System.exit(0);
+							}
+
 						///
 
 						System.out.println("Player 2, these are your cards:");
@@ -154,33 +174,41 @@ public class CrazyEightConsole
 										+ player2Hand.get(i).getSuit());
 							}
 
-						choice2 = JOptionPane.showOptionDialog(frame, "What would you like to do?", "Your turn",
-								JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, option, null);
+						System.out.println();
+						System.out.println("The pile has a " + pile.getRank() + " of " + pile.getSuit());
+						System.out.println();
+
+						choice2 = JOptionPane.showOptionDialog(frame,
+								"Player 2, what would you like to do? The pile has a " + pile.getRank() + " of " + pile.getSuit(),
+								"Your turn", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+								option, null);
 
 						switch (choice2)
 							{
 							case 0:
 								{
+									settingCard2 = true;
 									while (settingCard2)
 										{
 											JOptionPane.showMessageDialog(frame,
 													" Please choose a card and type the number that it in coresponds on the console.");
 											cardPlayed2 = userInput.nextInt();
 
-											if (playerHand.get(cardPlayed2 - 1).getValue() == pile.getValue()
-													|| playerHand.get(cardPlayed2 - 1).getSuit() == pile.getSuit())
+											if (player2Hand.get(cardPlayed2 - 1).getValue() == pile.getValue()
+													|| player2Hand.get(cardPlayed2 - 1).getSuit() == pile.getSuit())
 												{
-													pile = playerHand.get(cardPlayed2 - 1);
-													playerHand.remove(cardPlayed2 - 1);
+													pile = player2Hand.get(cardPlayed2 - 1);
+													player2Hand.remove(cardPlayed2 - 1);
+													System.out.println();
+													System.out.println("You played the " + pile.getRank() + " of "
+															+ pile.getSuit());
+													System.out.println();
+
 													settingCard2 = false;
-													System.out.println();
-													System.out.println("You played the " + pile.getRank() + " of " + pile.getSuit());
-													System.out.println();
-													
-												} 
-											else
+												} else
 												{
-													System.out.println("Please choose a number that corresponds to the card you want to play.");
+													System.out.println(
+															"Please choose a number that corresponds to the card you want to play.");
 
 												}
 										}
@@ -194,8 +222,13 @@ public class CrazyEightConsole
 								}
 
 							}
-					
+						if (player2Hand.size() == 0)
+							{
+								System.out.println("Player Two, you WIN!!!");
+								System.exit(0);
+							}
+
 					}
 			}
 
-	}
+		}
