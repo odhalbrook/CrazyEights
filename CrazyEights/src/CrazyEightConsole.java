@@ -11,10 +11,13 @@ public class CrazyEightConsole
 		static ArrayList<Card> player2Hand = new ArrayList<Card>();
 		static Object[] option =
 			{ "Play", "Draw" };
+		static Object[] option2 = {"hearts", "clubs", "spades", "diamonds"};
 		static int choice1;
 		static int choice2;
 		static boolean settingCard1 = true;
 		static boolean settingCard2 = true;
+		static boolean crazyEight1;
+		static boolean crazyEight2;
 		static Card pile;
 		static int cardPlayed1;
 		static int cardPlayed2;
@@ -66,13 +69,13 @@ public class CrazyEightConsole
 						dealCardPlayer();
 						dealCardPlayer2();
 
-						System.out.println(Deck.deck.size());
 					}
 
 				pile = Deck.deck.get(0);
 				Deck.deck.remove(0);
 
 			}
+		
 
 		public static void gameStart()
 			{
@@ -129,8 +132,54 @@ public class CrazyEightConsole
 													" Please choose a card and type the number that it in coresponds on the console.");
 											cardPlayed1 = userInput.nextInt();
 
-											if (playerHand.get(cardPlayed1 - 1).getValue() == pile.getValue()
-													|| playerHand.get(cardPlayed1 - 1).getSuit() == pile.getSuit())
+											if(playerHand.get(cardPlayed1 - 1).getValue() == 8)
+												{
+													crazyEight1 = true;
+
+													int crazyEightSuit = JOptionPane.showOptionDialog(frame,
+															"You chose a crazy eight, what suit would you like to change the card to?", "Crazy Eight",
+															JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, option2, null);
+
+													switch (crazyEightSuit)
+														{
+														case 0:
+															{
+																playerHand.get(cardPlayed1 - 1).setSuit("hearts");
+																JOptionPane.showMessageDialog(frame, "You chose to change the card to an eight of hearts.");
+															}
+															break;
+														case 1:
+															{
+																playerHand.get(cardPlayed1 - 1).setSuit("clubs");
+																JOptionPane.showMessageDialog(frame, "You chose to change the card to an eight of clubs.");
+															}
+															break;
+														case 2:
+															{
+																playerHand.get(cardPlayed1 - 1).setSuit("spades");
+																JOptionPane.showMessageDialog(frame, "You chose to change the card to an eight of spades");
+															}
+															break;
+														case 3:
+															{
+																playerHand.get(cardPlayed1 - 1).setSuit("diamonds");
+																JOptionPane.showMessageDialog(frame, "You chose to change the card to an eight of diamonds");
+															}
+															break;
+														}
+													pile = playerHand.get(cardPlayed1 - 1);
+													playerHand.remove(cardPlayed1 - 1);
+
+													System.out.println();
+													System.out.println("You played the " + pile.getRank() + " of "
+															+ pile.getSuit());
+													System.out.println();
+
+													settingCard1 = false;
+												}
+											
+											else if (playerHand.get(cardPlayed1 - 1).getValue() == pile.getValue()
+													|| playerHand.get(cardPlayed1 - 1).getSuit() == pile.getSuit() && crazyEight1 == false)
 												{
 													pile = playerHand.get(cardPlayed1 - 1);
 													playerHand.remove(cardPlayed1 - 1);
@@ -147,6 +196,7 @@ public class CrazyEightConsole
 													System.out.println(
 															"Please choose a number that corresponds to the card you want to play.");
 												}
+											crazyEight1 = false;
 										}
 								}
 								break;
@@ -194,8 +244,53 @@ public class CrazyEightConsole
 													" Please choose a card and type the number that it in coresponds on the console.");
 											cardPlayed2 = userInput.nextInt();
 
-											if (player2Hand.get(cardPlayed2 - 1).getValue() == pile.getValue()
-													|| player2Hand.get(cardPlayed2 - 1).getSuit() == pile.getSuit())
+											if(player2Hand.get(cardPlayed2 - 1).getValue() == 8)
+												{
+													crazyEight2 = true;
+													int crazyEightSuit2 = JOptionPane.showOptionDialog(frame,
+															"You chose a crazy eight, what suit would you like to change the card to?", "Crazy Eight",
+															JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, option2, null);
+
+													switch (crazyEightSuit2)
+														{
+														case 0:
+															{
+																player2Hand.get(cardPlayed2 - 1).setSuit("hearts");
+																JOptionPane.showMessageDialog(frame, "You chose to change the card to an eight of hearts.");
+															}
+															break;
+														case 1:
+															{
+																player2Hand.get(cardPlayed2 - 1).setSuit("clubs");
+																JOptionPane.showMessageDialog(frame, "You chose to change the card to an eight of clubs.");
+															}
+															break;
+														case 2:
+															{
+																player2Hand.get(cardPlayed2 - 1).setSuit("spades");
+																JOptionPane.showMessageDialog(frame, "You chose to change the card to an eight of spades");
+															}
+															break;
+														case 3:
+															{
+																player2Hand.get(cardPlayed2 - 1).setSuit("diamonds");
+																JOptionPane.showMessageDialog(frame, "You chose to change the card to an eight of diamonds");
+															}
+															break;
+														}
+													pile = player2Hand.get(cardPlayed2 - 1);
+													player2Hand.remove(cardPlayed2 - 1);
+
+													System.out.println();
+													System.out.println("You played the " + pile.getRank() + " of "
+															+ pile.getSuit());
+													System.out.println();
+
+													settingCard2 = false;
+												}
+											
+											else if (player2Hand.get(cardPlayed2 - 1).getValue() == pile.getValue()
+													|| player2Hand.get(cardPlayed2 - 1).getSuit() == pile.getSuit() && crazyEight2 == false )
 												{
 													pile = player2Hand.get(cardPlayed2 - 1);
 													player2Hand.remove(cardPlayed2 - 1);
@@ -211,6 +306,7 @@ public class CrazyEightConsole
 															"Please choose a number that corresponds to the card you want to play.");
 
 												}
+											crazyEight2 = false;
 										}
 								}
 								break;
